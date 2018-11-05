@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>后台管理</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+</head>
+
+<body>
+    <div class="topbar-wrap white">
+        <div class="topbar-inner clearfix">
+            <div class="topbar-logo-wrap clearfix">
+                <h1 class="topbar-logo none"><a href="index.html" class="navbar-brand">后台管理</a></h1>
+                <ul class="navbar-list clearfix">
+                    <li><a class="on" href="/index/index">首页</a></li>
+                    <li><a href="#" target="_blank">网站首页</a></li>
+                </ul>
+            </div>
+            <div class="top-info-wrap">
+                <ul class="top-info-list clearfix">
+                    <li><a href="http://www.sucaihuo.com">管理员</a></li>
+                    <li><a href="http://www.sucaihuo.com">修改密码</a></li>
+                    <li><a href="/user/logout">退出</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container clearfix">
+        <div class="sidebar-wrap">
+            <div class="sidebar-title">
+                <h1>菜单</h1>
+            </div>
+            <div class="sidebar-content">
+                <ul class="sidebar-list">
+                    <li>
+                        <a href="#"><i class="icon-font">&#xe003;</i>商品模块</a>
+                        <ul class="sub-menu">
+                            <li><a href="/index/design"><i class="icon-font">&#xe008;</i>作品管理</a></li>
+                            <li><a href="/category/index"><i class="icon-font">&#xe008;</i>分类管理</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="icon-font">&#xe003;</i>管理员模块</a>
+                        <ul class="sub-menu">
+                            <li><a href="/privilege/index"><i class="icon-font">&#xe008;</i>权限管理</a></li>
+                            <li><a href="/role/index"><i class="icon-font">&#xe008;</i>角色管理</a></li>
+                            <li><a href="/admin/index"><i class="icon-font">&#xe008;</i>管理员管理</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--/sidebar-->
+        <div class="main-wrap">
+
+            <div class="crumb-wrap">
+                <div class="crumb-list"><i class="icon-font"></i><a href="/index/index">首页</a><span class="crumb-step">&gt;</span><a
+                        class="crumb-name" href="/index/design/">作品管理</a><span class="crumb-step">&gt;</span><span>修改作品</span></div>
+            </div>
+            <div class="result-wrap">
+                <div class="result-content">
+                    <form action="/index/update?id=<?=$data['info']['id']?>" method="post" enctype="multipart/form-data">
+                        <table class="insert-tab" width="100%">
+                            <tbody>
+                                <tr>
+                                    <th width="120"><i class="require-red">*</i>一级分类ID：</th>
+                                    <td>
+                                        <select name="cat1_id">
+                                            <option value="">选择一级分类</option>
+                                            <?php foreach($topCat as $v): ?>
+                                                <?php if($v['id']==$data['info']['cat1_id']): ?>
+                                                    <option selected="selected" value="<?=$v['id']?>"><?=$v['cat_name']?></option>
+                                                <?php else: ?>
+                                                    <option value="<?=$v['id']?>"><?=$v['cat_name']?></option>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="120"><i class="require-red">*</i>二级分类ID：</th>
+                                    <td>
+                                        <select name="cat2_id"></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th width="120"><i class="require-red">*</i>三级分类ID：</th>
+                                    <td>
+                                        <select name="cat3_id"></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><i class="require-red">*</i>标题：</th>
+                                    <td>
+                                        <input class="common-text required" id="title" name="title" size="50" value="<?=$data['info']['title']?>" type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><i class="require-red">*</i>审核状态:</th>
+                                    <td>
+                                        <input type="radio" name="is_on_sale" value="0" <?php if($data['info']['is_show']=='0') echo 'checked'; ?>>通过
+                                        <input type="radio" name="is_on_sale" value="1" <?php if($data['info']['is_show']=='1') echo 'checked'; ?>> 不通过
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>作者：</th>
+                                    <td><input class="common-text" name="author" size="50" value="<?=$data['info']['register_id']?>" type="text"></td>
+                                </tr>
+                                <tr>
+                                    <th><i class="require-red">*</i>缩略图：</th>
+                                    <td>
+                                        <div class="img_preview">
+                                            <img src="<?=$data['images'][0]['path']?>" width="120" height="120" alt="">
+                                        </div>
+                                        <input class="preview" name="path[]" type="file"><br>
+                                        <div class="img_preview">
+                                            <img src="<?=$data['images'][1]['path']?>" width="120" height="120" alt="">
+                                        </div>
+                                        <input class="preview" name="path[]" type="file"><br>
+                                        <div class="img_preview">
+                                            <img src="<?=$data['images'][2]['path']?>" width="120" height="120" alt="">
+                                        </div>
+                                        <input class="preview" name="path[]" type="file">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>内容：</th>
+                                    <td>
+                                        <textarea name="content" class="common-textarea" id="content" cols="30" style="width: 98%;"
+                                            rows="10"><?=$data['info']['content']?></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><i class="require-red">*</i>浏览量：</th>
+                                    <td>
+                                        <input name="brand_id" size="50" type="text" value="<?=$data['info']['brand_id']?>">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td>
+                                        <input class="btn btn-primary btn6 mr10" value="提交" type="submit">
+                                        <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <!--/main-->
+    </div>
+</body>
+
+</html>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/img_preview.js"></script>
+
+<script>
+    // 二、三级分类的ID
+    var cat2_id = "<?=$data['info']['cat2_id']?>";
+    var cat3_id = "<?=$data['info']['cat3_id']?>";
+
+    // 三级联动
+    $("select[name=cat1_id]").change(function(){
+        // 取出这个分类的id
+        var id = $(this).val()
+        // 如果不为空就执行AJAX
+        if(id!="")
+        {
+            $.ajax({
+                type:"GET",
+                url:"/blog/ajax_get_cat?id="+id,
+                dataType:"json",
+                success:function(data)
+                {
+                    var str = "";
+                    for(var i=0;i<data.length;i++)
+                    {
+                        if(data[i].id == cat2_id)
+                            str += '<option selected="selected" value="'+data[i].id+'">'+data[i].cat_name+'</option>';
+                        else
+                            str += '<option value="'+data[i].id+'">'+data[i].cat_name+'</option>';
+                    }
+                    // 把拼好的 option 放到第二个下拉框中
+                    $("select[name=cat2_id]").html(str)
+                    // 触发第三个框的 change 事件
+                    $("select[name=cat2_id]").trigger('change');
+                }
+            });
+        }
+    });
+
+    $("select[name=cat2_id]").change(function(){
+        // 取出这个分类的id
+        var id = $(this).val()
+        // 如果不为空就执行AJAX
+        if(id!="")
+        {
+            $.ajax({
+                type:"GET",
+                url:"/blog/ajax_get_cat?id="+id,
+                dataType:"json",
+                success:function(data)
+                {
+                    var str = "";
+                    for(var i=0;i<data.length;i++)
+                    {
+                        if(data[i].id == cat3_id)
+                            str += '<option selected="selected" value="'+data[i].id+'">'+data[i].cat_name+'</option>';
+                        else
+                            str += '<option value="'+data[i].id+'">'+data[i].cat_name+'</option>';
+                    }
+                    // 把拼好的 option 放到第三个下拉框中
+                    $("select[name=cat3_id]").html(str)
+                }
+            });
+        }
+    });
+
+    // 触发一级分类的change事件，让它直接取出二级分类
+    $("select[name=cat1_id]").trigger("change");
+</script>
